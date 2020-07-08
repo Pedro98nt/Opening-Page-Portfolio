@@ -1,0 +1,92 @@
+:root {
+  --playState: paused;
+  --black: #000000;
+  --white: #ffffff;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+body {
+  background-color: red;
+}
+.screen {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.screen::before {
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  clip-path: polygon(0 0, 60% 0, 40% 100%, 0 100%);
+  background-color: var(--black);
+  transition: transform 1s ease-in-out;
+  animation: openleft 1.5s ease-in-out forwards;
+  animation-play-state: var(--playState);
+}
+.screen::after {
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  clip-path: polygon(
+    calc(100vw - 40%) 0,
+    100% 0,
+    100% 100%,
+    calc(100vw - 60%) 100%
+  );
+  background-color: var(--white);
+  transition: transform 1s ease-in-out;
+  z-index: -1;
+  animation: openright 1.5s ease-in-out forwards;
+  animation-play-state: var(--playState);
+}
+.screen__text {
+  user-select: none;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 56px;
+  letter-spacing: 1px;
+  mix-blend-mode: difference;
+  color: var(--white);
+  animation: text 1.5s ease-in-out forwards;
+  animation-play-state: var(--playState);
+}
+
+.screen__text > input {
+  display: none;
+}
+
+@keyframes openleft {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-60%);
+  }
+}
+@keyframes openright {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(60%);
+  }
+}
+@keyframes text {
+  from {
+    top: 50%;
+    opacity: 1;
+  }
+  to {
+    top: -10%;
+    opacity: 0;
+  }
+}
